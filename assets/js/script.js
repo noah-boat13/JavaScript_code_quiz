@@ -1,51 +1,74 @@
 // global variables to initialize the quiz
-var timeInterval = 75;
+var timeLeft = 100;
 var userScore = 0;
 var startQuiz = false;
 var currentQuestionIndex = 0;
+
+// query selectors to grab time ('countdown') and div container id's
+var timerEl = document.querySelector('.timer');
+var questionEl = document.querySelector('.container');
 
 // defines quiz questions and answers as objects within an array
 var quizQuestions = [
     {
         question: "Commonly used data types do NOT include:",
-        answers: ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
-        correctAnswer: "3.alerts"
+        answers: ["strings", "booleans", "alerts", "numbers"],
+        correctAnswer: "alerts"
     },
     {
         question: "The condition within an if/else statement is enclosed by _______.",
-        answers: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
-        correctAnswer: "2. curly brackets"
+        answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+        correctAnswer: "curly brackets"
     }
 ];
 
 // initialize quiz function
 function initializeQuiz() {
     startQuiz = true;
-    // removes the start button from page
-    document.getElementById("start-btn").remove();
+    // removes the header/description/start button from page to begin displaying questions and answers
+    questionEl.remove();
     // display the questions and start timer
     displayQuestions(currentQuestionIndex);
     startTimer();
 }
 
-// function to display each question
+// function to display each question then checks using verifyAnswer function
 function displayQuestions(questionIndex) {
-    var currentQuestion = quizQuestions[questionIndex]
+    var currentQuestion = quizQuestions[questionIndex];
 
-    console.log(currentQuestion.question);
-    console.log("Possible Answers: ", currentQuestion.answers);
+    var questionDisplay = document.createElement('div');
+    questionDisplay.innerHTML = '<h2>' + currentQuestion.question + '</h2>';
+
+    var answerListDisplay = document.createElement('ol');
+    currentQuestion.answers.forEach(function(answer) {
+        var answerListItem = document.createElement('li');
+
+        var answerListBtn = document.createElement('button');
+        answerListItem.textContent = answer;
+
+        answerListBtn.addEventListener('click', function() {
+            verifyAnswer(answer, currentQuestion.correctAnswer);
+        });
+        answerListItem.appendChild(answerListBtn);
+        answerListDisplay.appendChild(answerListItem);
+    });
+
+    questionDisplay.appendChild(answerListDisplay);
+    document.body.appendChild(questionDisplay);
 }
 
-// function to check user's answer
-function checkAnswer(userAnswer, correctAnswer) {
+// function to verify user's answer
+function verifyAnswer(userAnswer, correctAnswer) {
     if (userAnswer === correctAnswer) {
         userScore += 10;
     } else {
-        timeInterval -= 10;
+        timeLeft -= 10;
     }
 
+    // move to next question
     currentQuestionIndex++;
 
+    // check for more questions / if there are display next question / if not end quiz
     if (currentQuestionIndex < quizQuestions.length) {
         displayQuestions(currentQuestionIndex);
     } else {
@@ -55,7 +78,16 @@ function checkAnswer(userAnswer, correctAnswer) {
 
 // timer function
 function startTimer() {
-
+    var timerInterval = setInterval(function() {
+        timerEl.textContent = 'Time: ' + timeLeft;
+        
+        if (timerInterval <= 0 || !startQuiz) {
+            clearInterval(timerInterval);
+            endQuiz();
+        } else {
+            timeLeft--;
+        }
+    }, 1000);
 }
 
 // function to end the quiz
