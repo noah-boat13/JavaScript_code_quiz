@@ -4,7 +4,7 @@ var userScore = 0;
 var startQuiz = false;
 var currentQuestionIndex = 0;
 
-// query selectors to grab time ('countdown') and div container id's
+// query selectors to grab time ('countdown') and question container id's
 var timerEl = document.querySelector('.timer');
 var questionEl = document.querySelector('.container');
 
