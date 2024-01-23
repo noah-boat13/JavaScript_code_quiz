@@ -11,14 +11,29 @@ var questionEl = document.querySelector('.container');
 // defines quiz questions and answers as objects within an array
 var quizQuestions = [
     {
-        question: "Commonly used data types do NOT include:",
-        answers: ["strings", "booleans", "alerts", "numbers"],
-        correctAnswer: "alerts"
+        question: 'Commonly used data types do NOT include:',
+        answers: ['strings', 'booleans', 'alerts', 'numbers'],
+        correctAnswer: 'alerts'
     },
     {
-        question: "The condition within an if/else statement is enclosed by _______.",
-        answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
-        correctAnswer: "curly brackets"
+        question: 'The condition within an if/else statement is enclosed by _______.',
+        answers: ['quotes', 'curly brackets', 'parenthesis', 'square brackets'],
+        correctAnswer: 'curly brackets'
+    },
+    {
+        question: 'Arrays in JavaScript can be used to store _______.',
+        answers: ['numbers and strings', 'other arrays', 'booleans', 'all of the above'],
+        correctAnswer: 'all of the above'
+    },
+    {
+        question: 'Strings must be enclosed within ______ when being assigned to variables.',
+        answers: ['commas', 'curly brackets', 'quotes', 'parenthesis'],
+        correctAnswer: 'parenthesis'
+    },
+    {
+        question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
+        answers: ['Javascript', 'terminal/bash', 'for loops', 'console.log'],
+        correctAnswer: 'console.log'
     }
 ];
 
