@@ -4,9 +4,9 @@ var userScore = 0;
 var startQuiz = false;
 var currentQuestionIndex = 0;
 
-// query selectors to grab time ('countdown') and question container id's
+// query selectors to grab time ('countdown') and question ('container') classes
 var timerEl = document.querySelector('.timer');
-var questionEl = document.querySelector('.container');
+var containerEl = document.querySelector('.container');
 
 // defines quiz questions and answers as objects within an array
 var quizQuestions = [
@@ -41,7 +41,12 @@ var quizQuestions = [
 function initializeQuiz() {
     startQuiz = true;
     // removes the header/description/start button from page to begin displaying questions and answers
-    questionEl.remove();
+    var newContainerEl = document.createElement('div');
+    newContainerEl.setAttribute('class', 'container');
+
+    containerEl.replaceWith(newContainerEl);
+
+    containerEl = newContainerEl;
     // display the questions and start timer
     displayQuestions(currentQuestionIndex);
     startTimer();
@@ -51,33 +56,41 @@ function initializeQuiz() {
 function displayQuestions(questionIndex) {
     var currentQuestion = quizQuestions[questionIndex];
 
+    containerEl.innerHTML = '';
+
     var questionDisplay = document.createElement('div');
     questionDisplay.innerHTML = '<h2>' + currentQuestion.question + '</h2>';
 
     var answerListDisplay = document.createElement('ol');
     currentQuestion.answers.forEach(function(answer) {
         var answerListItem = document.createElement('li');
-
-        var answerListBtn = document.createElement('button');
         answerListItem.textContent = answer;
 
-        answerListBtn.addEventListener('click', function() {
+        answerListItem.addEventListener('click', function() {
             verifyAnswer(answer, currentQuestion.correctAnswer);
         });
-        answerListItem.appendChild(answerListBtn);
         answerListDisplay.appendChild(answerListItem);
     });
 
     questionDisplay.appendChild(answerListDisplay);
-    document.body.appendChild(questionDisplay);
+    containerEl.appendChild(questionDisplay);
+}
+
+function displayCorrect() {
+    console.log('Correct');
+}
+
+function displayIncorrect() {
+    console.log('Incorrect');
 }
 
 // function to verify user's answer
 function verifyAnswer(userAnswer, correctAnswer) {
     if (userAnswer === correctAnswer) {
-        userScore += 10;
+        displayCorrect();
     } else {
         timeLeft -= 10;
+        displayIncorrect();
     }
 
     // move to next question
@@ -94,19 +107,26 @@ function verifyAnswer(userAnswer, correctAnswer) {
 // timer function
 function startTimer() {
     var timerInterval = setInterval(function() {
-        timerEl.textContent = 'Time: ' + timeLeft;
         
-        if (timerInterval <= 0 || !startQuiz) {
-            clearInterval(timerInterval);
-            endQuiz();
+        
+        if (startQuiz) {
+            timerEl.textContent = 'Time: ' + timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endQuiz();
+            } else {
+                timeLeft--;
+            }
         } else {
-            timeLeft--;
-        }
+            clearInterval(timerInterval);
+        }  
     }, 1000);
 }
 
 // function to end the quiz
 function endQuiz() {
+    userScore = timeLeft;
     console.log("Quiz complete! Final score: " + userScore);
 }
 
