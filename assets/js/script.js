@@ -3,7 +3,7 @@ var timeLeft = 100;
 var userScore = 0;
 var startQuiz = false;
 var currentQuestionIndex = 0;
-var highScores = [];
+var highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
 // query selectors to grab time ('countdown') and question ('container') classes
 var timerEl = document.querySelector('.timer');
@@ -39,32 +39,36 @@ var quizQuestions = [
     }
 ];
 
-// initialize quiz function
-function initializeQuiz() {
+function mainQuizMenu() {
     var mainMenu = document.createElement('div');
     mainMenu.innerHTML = '<h1>JavaScript Coding Quiz</h1>' + '<p>Try to answer the following code-oriented questions within the time given once you click the "Start Quiz" button below. Keep in mind that inncorrect answers will penalize your score/time by ten secconds. Good Luck!</p>' + '<button id="start-btn">Start Quiz</button>';
 
     containerEl.replaceWith(mainMenu);
     containerEl = mainMenu;
 
-    document.getElementById("start-btn").addEventListener("click", function() {
-        startQuiz = true;
-        displayQuestions(currentQuestionIndex);
-        startTimer();
-    });
+    document.getElementById("start-btn").addEventListener("click", initializeQuiz);
 }
 
-    // removes the header/description/start button from page to begin displaying questions and answers
-    //         var newContainerEl = document.createElement('div');
-    //         newContainerEl.setAttribute('class', 'container');
+function resetQuiz() {
+    startQuiz = false;
+    timeLeft = 100;
+    currentQuestionIndex = 0;
+    containerEl.innerHTML = '';
+}
 
-    //         containerEl.replaceWith(newContainerEl);
-
-    //         containerEl = newContainerEl;
-    //         // display the questions and start timer
-    //         displayQuestions(currentQuestionIndex);
-    //         startTimer();
+// initialize quiz function
+function initializeQuiz() {
+    startQuiz = true;
     
+    var newContainerEl = document.createElement('div');
+    newContainerEl.setAttribute('class', 'container');
+
+    containerEl.replaceWith(newContainerEl);
+    containerEl = newContainerEl;
+
+    displayQuestions(currentQuestionIndex);
+    startTimer();
+}
 
 // function to display each question then checks using verifyAnswer function
 function displayQuestions(questionIndex) {
@@ -98,7 +102,7 @@ function displayCorrect() {
 
 function displayIncorrect() {
     var incorrectDisplay = document.createElement('div');
-    incorrectDisplay.textContent = 'Incorrect';
+    incorrectDisplay.textContent = 'Incorrect!';
     containerEl.appendChild(incorrectDisplay);
 }
 
@@ -141,8 +145,7 @@ function startTimer() {
 }
 
 function viewHighScores() {
-    var scoresEl = document.getElementById('view-scores-btn');
-    scoresEl.addEventListener('click', displayHighScores);
+    displayHighScores();
 }
 
 function displayHighScoreInput() {
@@ -176,6 +179,8 @@ function saveHighScore(userName) {
 
     highScores.sort((a,b) => b.score - a.score);
 
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+
     displayHighScores();
 }
 
@@ -197,7 +202,10 @@ function displayHighScores() {
     var backBtn = document.createElement('button');
     backBtn.textContent = 'Back to main menu';
     backBtn.addEventListener('click', function() {
-        initializeQuiz();
+        timeLeft = 0;
+        timerEl.textContent = 'Time: 0';
+
+        mainQuizMenu();
     });
 
     highScoresDisplay.appendChild(backBtn);
@@ -206,8 +214,11 @@ function displayHighScores() {
 
 // function to end the quiz
 function endQuiz() {
-    userScore = timeLeft;
+
+    userScore += (timeLeft + 1);
+
     
+    resetQuiz();
     displayHighScoreInput();
 }
 
