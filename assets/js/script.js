@@ -9,6 +9,7 @@ var highScores = [];
 var timerEl = document.querySelector('.timer');
 var containerEl = document.querySelector('.container');
 
+
 // defines quiz questions and answers as objects within an array
 var quizQuestions = [
     {
@@ -40,18 +41,30 @@ var quizQuestions = [
 
 // initialize quiz function
 function initializeQuiz() {
-    startQuiz = true;
-    // removes the header/description/start button from page to begin displaying questions and answers
-    var newContainerEl = document.createElement('div');
-    newContainerEl.setAttribute('class', 'container');
+    var mainMenu = document.createElement('div');
+    mainMenu.innerHTML = '<h1>JavaScript Coding Quiz</h1>' + '<p>Try to answer the following code-oriented questions within the time given once you click the "Start Quiz" button below. Keep in mind that inncorrect answers will penalize your score/time by ten secconds. Good Luck!</p>' + '<button id="start-btn">Start Quiz</button>';
 
-    containerEl.replaceWith(newContainerEl);
+    containerEl.replaceWith(mainMenu);
+    containerEl = mainMenu;
 
-    containerEl = newContainerEl;
-    // display the questions and start timer
-    displayQuestions(currentQuestionIndex);
-    startTimer();
+    document.getElementById("start-btn").addEventListener("click", function() {
+        startQuiz = true;
+        displayQuestions(currentQuestionIndex);
+        startTimer();
+    });
 }
+
+    // removes the header/description/start button from page to begin displaying questions and answers
+    //         var newContainerEl = document.createElement('div');
+    //         newContainerEl.setAttribute('class', 'container');
+
+    //         containerEl.replaceWith(newContainerEl);
+
+    //         containerEl = newContainerEl;
+    //         // display the questions and start timer
+    //         displayQuestions(currentQuestionIndex);
+    //         startTimer();
+    
 
 // function to display each question then checks using verifyAnswer function
 function displayQuestions(questionIndex) {
@@ -127,6 +140,11 @@ function startTimer() {
     }, 1000);
 }
 
+function viewHighScores() {
+    var scoresEl = document.getElementById('view-scores-btn');
+    scoresEl.addEventListener('click', displayHighScores);
+}
+
 function displayHighScoreInput() {
     containerEl.innerHTML = '';
 
@@ -194,3 +212,4 @@ function endQuiz() {
 }
 
 document.getElementById("start-btn").addEventListener("click", initializeQuiz);
+document.getElementById('view-scores-btn').addEventListener('click', viewHighScores);
