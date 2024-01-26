@@ -51,7 +51,7 @@ function mainQuizMenu() {
 
 function resetQuiz() {
     startQuiz = false;
-    timeLeft = 100;
+    timeLeft = 0;
     currentQuestionIndex = 0;
     containerEl.innerHTML = '';
 }
@@ -59,6 +59,7 @@ function resetQuiz() {
 // initialize quiz function
 function initializeQuiz() {
     startQuiz = true;
+    timeLeft = 100;
     
     var newContainerEl = document.createElement('div');
     newContainerEl.setAttribute('class', 'container');
@@ -85,6 +86,7 @@ function displayQuestions(questionIndex) {
         answerListItem.textContent = answer;
 
         answerListItem.addEventListener('click', function() {
+            resetAnswersDisplay();
             verifyAnswer(answer, currentQuestion.correctAnswer);
         });
         answerListDisplay.appendChild(answerListItem);
@@ -92,18 +94,39 @@ function displayQuestions(questionIndex) {
 
     questionDisplay.appendChild(answerListDisplay);
     containerEl.appendChild(questionDisplay);
+
+    var correctDisplay = document.createElement('div');
+    correctDisplay.setAttribute('id', 'correct-display');
+    containerEl.appendChild(correctDisplay);
+
+    var incorrectDisplay = document.createElement('div');
+    incorrectDisplay.setAttribute('id', 'incorrect-display');
+    containerEl.appendChild(incorrectDisplay);
 }
 
+
 function displayCorrect() {
-    var correctDisplay = document.createElement('div');
+    var correctDisplay = document.getElementById('correct-display');
     correctDisplay.textContent = 'Correct!';
-    containerEl.appendChild(correctDisplay);
+    console.log(displayCorrect);
 }
 
 function displayIncorrect() {
-    var incorrectDisplay = document.createElement('div');
+    var incorrectDisplay = document.getElementById('incorrect-display');
     incorrectDisplay.textContent = 'Incorrect!';
-    containerEl.appendChild(incorrectDisplay);
+    console.log(displayIncorrect);
+}
+
+function resetAnswersDisplay() {
+    var correctDisplay = document.getElementById('correct-display');
+    if (correctDisplay) {
+        correctDisplay.textContent = '';
+    }
+    
+    var incorrectDisplay = document.getElementById('incorrect-display');
+    if (incorrectDisplay) {
+        incorrectDisplay.textContent = '';
+    }
 }
 
 // function to verify user's answer
@@ -200,7 +223,7 @@ function displayHighScores() {
     highScoresDisplay.appendChild(highScoresList);
 
     var backBtn = document.createElement('button');
-    backBtn.textContent = 'Back to main menu';
+    backBtn.textContent = 'Back to Main Menu';
     backBtn.addEventListener('click', function() {
         timeLeft = 0;
         timerEl.textContent = 'Time: 0';
@@ -208,16 +231,34 @@ function displayHighScores() {
         mainQuizMenu();
     });
 
+    var resetScoresBtn = document.createElement('button');
+    resetScoresBtn.textContent = 'Reset High Scores';
+    resetScoresBtn.addEventListener('click', resetHighScores);
+    
+
+    
     highScoresDisplay.appendChild(backBtn);
+    highScoresDisplay.appendChild(resetScoresBtn);
     containerEl.appendChild(highScoresDisplay);
+}
+
+function resetHighScores() {
+    localStorage.removeItem('highScores');
+    highScores = [];
+
+    timeLeft = 0;
+    
+
+    // resetScoresBtn.removeEventListener('click', resetHighScores);
+
+    displayHighScores();
 }
 
 // function to end the quiz
 function endQuiz() {
+    userScore = timeLeft;
+    timeLeft = 0;
 
-    userScore += (timeLeft + 1);
-
-    
     resetQuiz();
     displayHighScoreInput();
 }
