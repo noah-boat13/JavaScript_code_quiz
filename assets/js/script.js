@@ -9,7 +9,6 @@ var highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 var timerEl = document.querySelector('.timer');
 var containerEl = document.querySelector('.container');
 
-
 // defines quiz questions and answers as objects within an array
 var quizQuestions = [
     {
@@ -60,7 +59,7 @@ function resetQuiz() {
 function initializeQuiz() {
     startQuiz = true;
     timeLeft = 100;
-    
+
     var newContainerEl = document.createElement('div');
     newContainerEl.setAttribute('class', 'container');
 
@@ -86,56 +85,21 @@ function displayQuestions(questionIndex) {
         answerListItem.textContent = answer;
 
         answerListItem.addEventListener('click', function() {
-            resetAnswersDisplay();
             verifyAnswer(answer, currentQuestion.correctAnswer);
         });
         answerListDisplay.appendChild(answerListItem);
     });
-
     questionDisplay.appendChild(answerListDisplay);
     containerEl.appendChild(questionDisplay);
-
-    var correctDisplay = document.createElement('div');
-    correctDisplay.setAttribute('id', 'correct-display');
-    containerEl.appendChild(correctDisplay);
-
-    var incorrectDisplay = document.createElement('div');
-    incorrectDisplay.setAttribute('id', 'incorrect-display');
-    containerEl.appendChild(incorrectDisplay);
-}
-
-
-function displayCorrect() {
-    var correctDisplay = document.getElementById('correct-display');
-    correctDisplay.textContent = 'Correct!';
-    console.log(displayCorrect);
-}
-
-function displayIncorrect() {
-    var incorrectDisplay = document.getElementById('incorrect-display');
-    incorrectDisplay.textContent = 'Incorrect!';
-    console.log(displayIncorrect);
-}
-
-function resetAnswersDisplay() {
-    var correctDisplay = document.getElementById('correct-display');
-    if (correctDisplay) {
-        correctDisplay.textContent = '';
-    }
-    
-    var incorrectDisplay = document.getElementById('incorrect-display');
-    if (incorrectDisplay) {
-        incorrectDisplay.textContent = '';
-    }
 }
 
 // function to verify user's answer
 function verifyAnswer(userAnswer, correctAnswer) {
     if (userAnswer === correctAnswer) {
-        displayCorrect();
+        console.log('correct');
     } else {
+        console.log('incorrect');
         timeLeft -= 10;
-        displayIncorrect();
     }
 
     // move to next question
@@ -152,19 +116,18 @@ function verifyAnswer(userAnswer, correctAnswer) {
 // timer function
 function startTimer() {
     var timerInterval = setInterval(function() {
-        if (startQuiz) {
-            timerEl.textContent = 'Time: ' + timeLeft;
-
-            if (timeLeft <= 0 || currentQuestionIndex >= quizQuestions.length) {
-                clearInterval(timerInterval);
-                endQuiz();
-            } else {
-                timeLeft--;
-            }
-        } else {
+    if (startQuiz) {
+        timerEl.textContent = 'Time: ' + timeLeft;
+        if (timeLeft <= 0 || currentQuestionIndex >= quizQuestions.length) {
             clearInterval(timerInterval);
-        }  
-    }, 1000);
+            endQuiz();
+        } else {
+            timeLeft--;
+        }
+    } else {
+        clearInterval(timerInterval);
+    }  
+}, 1000);   
 }
 
 function viewHighScores() {
@@ -234,9 +197,7 @@ function displayHighScores() {
     var resetScoresBtn = document.createElement('button');
     resetScoresBtn.textContent = 'Reset High Scores';
     resetScoresBtn.addEventListener('click', resetHighScores);
-    
 
-    
     highScoresDisplay.appendChild(backBtn);
     highScoresDisplay.appendChild(resetScoresBtn);
     containerEl.appendChild(highScoresDisplay);
@@ -247,16 +208,13 @@ function resetHighScores() {
     highScores = [];
 
     timeLeft = 0;
-    
-
-    // resetScoresBtn.removeEventListener('click', resetHighScores);
 
     displayHighScores();
 }
 
 // function to end the quiz
 function endQuiz() {
-    userScore = timeLeft;
+    userScore = (timeLeft + 1);
     timeLeft = 0;
 
     resetQuiz();
