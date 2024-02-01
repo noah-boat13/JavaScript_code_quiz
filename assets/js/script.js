@@ -41,6 +41,7 @@ var quizQuestions = [
 function mainQuizMenu() {
     var mainMenu = document.createElement('div');
     mainMenu.innerHTML = '<h1>JavaScript Coding Quiz</h1>' + '<p>Try to answer the following code-oriented questions within the time given once you click the "Start Quiz" button below. Keep in mind that inncorrect answers will penalize your score/time by ten secconds. Good Luck!</p>' + '<button id="start-btn">Start Quiz</button>';
+    mainMenu.setAttribute('class', 'container');
 
     containerEl.replaceWith(mainMenu);
     containerEl = mainMenu;
@@ -80,8 +81,10 @@ function displayQuestions(questionIndex) {
     questionDisplay.innerHTML = '<h2>' + currentQuestion.question + '</h2>';
 
     var answerListDisplay = document.createElement('ol');
+    answerListDisplay.setAttribute('class', 'questions');
     currentQuestion.answers.forEach(function(answer) {
         var answerListItem = document.createElement('li');
+        answerListItem.setAttribute('id', 'answers');
         answerListItem.textContent = answer;
 
         answerListItem.addEventListener('click', function() {

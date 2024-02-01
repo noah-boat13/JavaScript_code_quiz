@@ -1,18 +1,80 @@
-/* header {
-    background-color: black;
-    color: white;
+header {
     display: flex;
     justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    background-color: grey;
+    color: white;
+
+
 }
 
-section {
+h1 {
+    background-color: coral;
+    color: white;
+    border: 4px solid black;
+    padding: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 70vh:
+
+}
+
+p {
+   border: 4px dotted black;
+   margin: 40px;
+   padding: 20px;
+}
+
+.container {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px 60px 20px;
 }
 
 .timer {
-    background-color: whitesmoke;
-    color: black;
-} */
+    padding: 6px 10px 6px 10px;
+    background-color: coral;
+    color: white;
+    border: 4px solid black;
+    margin-right: 30px;
+}
+
+.questions {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px 40px 20px;
+}
+
+#answers {
+    background-color: grey;
+    color: white;
+    padding: 10px 6px 10px 6px;
+    border: 4px solid black;
+}
+
+#answers:hover {
+    background-color: coral;
+
+}
+#answers:active {
+    background-color: coral;
+}
+
+#view-scores-btn {
+    background-color: coral;
+    color: white;
+    padding: 10px 6px 10px 6px;
+    border: 4px solid black;
+    margin-left: 30px;
+ 
+}
+
+#start-btn {
+    background-color: coral;
+    color: white;
+    padding: 20px 40px 20px 40px;
+    border: 4px solid black;
+    margin: 10px auto;
+    display: block;
+    width: fit-content;
+}
