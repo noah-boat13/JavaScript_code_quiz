@@ -1,19 +1,19 @@
-# Module 4 Challenge - Coding Quiz Webpage
+# JavaScript Coding Quiz Webpage
 
-## User Story
-AS A coding boot camp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
+## Description
+This webpage is a tool to help reinforce JavaScript concepts in a clean and efficent manner. The application runs through a series of questions and the user has to pick from four different answer options. Once the quiz starts the timer is set to 100 seconds with 10 being subtracted for a wrong answer. When completed, the application will propt the user to enter their name/initials to save their high score to local storage.
 
-## Acceptance Criteria
-GIVEN I am taking a code quiz
-WHEN I click the start button
-THEN a timer starts and I am presented with a question
-WHEN I answer a question
-THEN I am presented with another question
-WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
-WHEN all questions are answered or the timer reaches 0
-THEN the game is over
-WHEN the game is over
-THEN I can save my initials and score
+## Usage
+
+![Main Menu Screen](assets/images/Screenshot%202024-02-02%20at%2010.54.27 AM.png)
+
+![Quiz Screen](assets/images/Screenshot%202024-02-02%20at%2010.54.39 AM.png)
+
+![High Score Input Screen](assets/images/Screenshot%202024-02-02%20at%2010.54.56 AM.png)
+
+![High Score Screen](assets/images/Screenshot%202024-02-02%20at%2010.55.08 AM.png)
+
+[Website Link](https://noah-boat13.github.io/JavaScript_code_quiz/)
+
+## Credit
+I pair-programmed with a classmate, Vic Swain, as well as using ASK BCS and office hours to complete this project.
