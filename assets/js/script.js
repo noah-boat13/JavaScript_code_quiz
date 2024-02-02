@@ -8,6 +8,7 @@ var highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 // query selectors to grab time ('countdown') and question ('container') classes
 var timerEl = document.querySelector('.timer');
 var containerEl = document.querySelector('.container');
+var answerDisplayEl = document.getElementById('answer-display');
 
 // defines quiz questions and answers as objects within an array
 var quizQuestions = [
@@ -99,10 +100,14 @@ function displayQuestions(questionIndex) {
 // function to verify user's answer
 function verifyAnswer(userAnswer, correctAnswer) {
     if (userAnswer === correctAnswer) {
-        console.log('correct');
+        var correctDisplay = document.createElement('p');
+        correctDisplay.textContent = 'Correct';
+        answerDisplayEl.appendChild(correctDisplay);
     } else {
-        console.log('incorrect');
         timeLeft -= 10;
+        var incorrectDisplay = document.createElement('p');
+        incorrectDisplay.textContent = 'Incorrect';
+        answerDisplayEl.appendChild(incorrectDisplay);
     }
 
     // move to next question
@@ -148,6 +153,7 @@ function displayHighScoreInput() {
     userInput.setAttribute('id', 'nameInput');
 
     var submitBtn = document.createElement('button');
+    submitBtn.setAttribute('class', 'score-sub-btn');
     submitBtn.textContent = 'Submit';
     submitBtn.addEventListener('click', function() {
         saveHighScore(userInput.value);
@@ -189,6 +195,7 @@ function displayHighScores() {
     highScoresDisplay.appendChild(highScoresList);
 
     var backBtn = document.createElement('button');
+    backBtn.setAttribute('class', 'back-btn');
     backBtn.textContent = 'Back to Main Menu';
     backBtn.addEventListener('click', function() {
         timeLeft = 0;
@@ -198,6 +205,7 @@ function displayHighScores() {
     });
 
     var resetScoresBtn = document.createElement('button');
+    resetScoresBtn.setAttribute('class', 'reset-btn');
     resetScoresBtn.textContent = 'Reset High Scores';
     resetScoresBtn.addEventListener('click', resetHighScores);
 
