@@ -58,6 +58,7 @@ p {
 }
 #answers:active {
     background-color: coral;
+    border: 4px solid white;
 }
 
 #view-scores-btn {
@@ -78,3 +79,30 @@ p {
     display: block;
     width: fit-content;
 }
+
+#nameInput {
+    background-color: white;
+    color: grey;
+}
+
+.score-sub-btn {
+    background: coral;
+    border: 2px solid black;
+}
+
+.back-btn {
+    background: coral;
+    border: 4px solid black;
+    color: white;
+    padding: 6px;
+    margin: 2px;
+}
+
+.reset-btn {
+    background: coral;
+    border: 4px solid black;
+    color: white;
+    padding: 6px;
+    margin: 2px;
+}
+
